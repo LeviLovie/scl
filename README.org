@@ -1,0 +1,12 @@
+#+title: SCL
+#+description: Stack Code Language
+
+SFC is a stack-based programming language
+
+* Plans
+- [ ] Stack
+- [ ] Structures
+- [ ] Static memory
+- [ ] Functions and macros
+- [ ] Turing completness
+- [ ] Self hosting
