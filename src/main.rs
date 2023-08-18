@@ -83,6 +83,8 @@ fn main() {
                     error("Stack error", "Unable to dump element from the stack.")
                 }
             }
+        } else {
+            error("Syntax error", format!("Unexpected syntax: {}", tokens[i].0).as_str());
         }
     }
 }
