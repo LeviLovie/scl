@@ -1,0 +1,12 @@
+#+title: Docs
+#+description: Documentation for tge Stack Code language
+
+* Syntax
+- Write =//= and the rest of the line will be a comment
+** Stack
+- Write =.= to print and remove last element from the stack
+- Write =!= to print full stack
+- Write =§= to clear stack
+*** Math
+- Write =+= to remove last two elements from the stack, and push them added together
+- Write =-= to remove last two elements from the stack, and push them subtracted
