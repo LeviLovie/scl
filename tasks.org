@@ -6,10 +6,11 @@
 - [X] Open file
 - [X] Delete comments
 - [X] Delete tabs and \n's
-- [ ] Parse code to array of tokens with values
+- [X] Parse code to array of tokens with values
 ** Interpretaion
-- [ ] Make stack
-*** [ ] Intrepretate basic tokens
-- Number (push number onto the stack)
-- Plus, minus
-- Print (!), dump (.)
+- [X] Make stack
+- [X] Intrepretate basic tokens
+  - Number (push number onto the stack)
+  - Plus, minus
+  - Print (!), dump (.)
+  - Clear (§)
