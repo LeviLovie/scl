@@ -1,0 +1,8 @@
+// Application what pushes 10 and 20 to the stack,
+// Prints the stack, adds to numbers together,
+// Dumbs the result, and prints stack again.
+10 20
+!
++ .
+!
+g

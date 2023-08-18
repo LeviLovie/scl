@@ -1,0 +1,15 @@
+#+title: Tasks
+#+description: There I write tasks what i need to do in the project
+
+* Stack
+** Parsing file
+- [X] Open file
+- [X] Delete comments
+- [X] Delete tabs and \n's
+- [ ] Parse code to array of tokens with values
+** Interpretaion
+- [ ] Make stack
+*** [ ] Intrepretate basic tokens
+- Number (push number onto the stack)
+- Plus, minus
+- Print (!), dump (.)
