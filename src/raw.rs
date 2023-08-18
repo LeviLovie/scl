@@ -7,6 +7,7 @@ pub const TOKEN_PLUS:  (i32, &str) = (2, "+");
 pub const TOKEN_MINUS: (i32, &str) = (3, "-");
 pub const TOKEN_DUMP:  (i32, &str) = (4, ".");
 pub const TOKEN_PRINT: (i32, &str) = (5, "!");
+pub const TOKEN_CLEAR: (i32, &str) = (6, "§");
 
 pub fn generate_tokens(code: String) -> Vec<(i32, String)> {
     let splitted = code.split(" ");
@@ -19,6 +20,7 @@ pub fn generate_tokens(code: String) -> Vec<(i32, String)> {
             else if split == TOKEN_MINUS.1 {result.push((TOKEN_MINUS.0, "".to_string()));}
             else if split == TOKEN_DUMP.1  {result.push((TOKEN_DUMP.0,  "".to_string()));}
             else if split == TOKEN_PRINT.1 {result.push((TOKEN_PRINT.0, "".to_string()));}
+            else if split == TOKEN_CLEAR.1 {result.push((TOKEN_CLEAR.0, "".to_string()));}
             else {println!("Unexpected syntax: `{}`", split); std::process::exit(1);}
         }
     }

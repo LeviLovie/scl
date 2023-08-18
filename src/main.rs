@@ -68,11 +68,20 @@ fn main() {
                 }
             }
             print!("]\n");
+        } else if tokens[i].0 == TOKEN_CLEAR.0 {
+            if debug {
+                println!("\x1b[34m\x1b[1mClearing stack\x1b[0m.")
+            }
+            stack = vec!();
         } else if tokens[i].0 == TOKEN_DUMP.0 {
-            if let Some((_, int, _)) = stack.pop() {
-                println!("{}", int)
+            if stack.len() < 1 {
+                error("Stack error", "Trying to dump element from the stack, but stack doesn't have enought elements.");
             } else {
-                error("Stack error", "Unable to dump element from the stack.")
+                if let Some((_, int, _)) = stack.pop() {
+                    println!("{}", int)
+                } else {
+                    error("Stack error", "Unable to dump element from the stack.")
+                }
             }
         }
     }

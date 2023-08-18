@@ -2,3 +2,7 @@
 // Prints the stack, adds to numbers together,
 // Dumbs the result, and prints stack again.
 10 20 ! + . !
+
+// Pushes 1 to the stack,
+// Prints stack, clears stack, and one more itme prints stack.
+1 ! § !
