@@ -84,7 +84,7 @@ fn main() {
                 }
             }
         } else {
-            error("Syntax error", format!("Unexpected syntax: {}", tokens[i].0).as_str());
+            error("Interpretation error", format!("Unexpected syntax, has been parsed, but can't be interpreted: {}", tokens[i].0).as_str());
         }
     }
 }

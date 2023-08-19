@@ -21,7 +21,10 @@ pub fn generate_tokens(code: String) -> Vec<(i32, String)> {
             else if split == TOKEN_DUMP.1  {result.push((TOKEN_DUMP.0,  "".to_string()));}
             else if split == TOKEN_PRINT.1 {result.push((TOKEN_PRINT.0, "".to_string()));}
             else if split == TOKEN_CLEAR.1 {result.push((TOKEN_CLEAR.0, "".to_string()));}
-            else {println!("Unexpected syntax: `{}`", split); std::process::exit(1);}
+            else {
+                println!("\x1b[31m\x1b[1m{}: \x1b[0m\x1b[31m{}\x1b[0m", "Syntax error", format!("Parsing failed: `{}`", split).as_str());
+                std::process::exit(1);
+            }
         }
     }
     return result;
