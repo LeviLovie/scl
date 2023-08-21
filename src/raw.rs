@@ -2,8 +2,6 @@ use std::fs::File;
 use std::io::Read;
 use regex::Regex;
 
-use crate::error;
-
 pub const TOKEN_NUM: (i32, &str) = (1, "");
 pub const TOKEN_PLUS:(i32, &str) = (2, "+");
 pub const TOKEN_MINUS: (i32, &str) = (3, "-");
@@ -23,6 +21,7 @@ pub const TOKEN_IF: (i32, &str) = (16, "if");
 pub const TOKEN_FI: (i32, &str) = (17, "fi");
 pub const TOKEN_WHILE: (i32, &str) = (18, "while");
 pub const TOKEN_WHEND: (i32, &str) = (19, "end");
+pub const TOKEN_SWAP: (i32, &str) = (20, "swap");
 
 pub const TOKENS_TO_BE_NESTED: [&(i32, &str); 2] = [&TOKEN_IF, &TOKEN_WHILE];
 pub const TOKENS_TO_BE_UNNESTED: [&(i32, &str); 2] = [&TOKEN_FI, &TOKEN_WHEND];
@@ -62,48 +61,42 @@ pub fn generate_tokens(code: String) -> Vec<(i32, String)> {
                         if splitted.clone().nth(fi_index).unwrap() == TOKENS_TO_BE_NESTED[variation_index].1 {
                             depth += 1;
                         } else if splitted.clone().nth(fi_index).unwrap() == TOKENS_TO_BE_UNNESTED[variation_index].1 {
-                            if depth != 0 {
-                                depth -= 1;
-                            }
+                            if depth != 0 {depth -= 1;}
                         }
                     }
                     if depth < 0 {
                         error("Structures syntax error", format!("Error with founding {}", TOKEN_FI.1).as_str());
-                    } else if depth == 0 {
-                        fi_found = true;
-                    }
+                    } else if depth == 0 {fi_found = true;}
                     fi_index += 1;
                 }
                 result.push((TOKEN_IF.0, format!("{}", fi_index - 1)));
             } else if split == TOKEN_FI.1 {
                 result.push((TOKEN_FI.0, "".to_string()));
             } else if split == TOKEN_WHILE.1 {
-                let mut whend_index = iterator;
-                let mut whend_found = false;
+                let mut end_index = iterator;
+                let mut end_found = false;
                 let mut depth = 0;
-                while !whend_found {
-                    if whend_index >= splitted.clone().count() {
+                while !end_found {
+                    if end_index >= splitted.clone().count() {
                         error("Structures syntax error", format!("Missing {}", TOKEN_WHILE.1).as_str());
                     }
                     for variation_index in 0..TOKENS_TO_BE_NESTED.len() {
-                        if splitted.clone().nth(whend_index).unwrap() == TOKENS_TO_BE_NESTED[variation_index].1 {
+                        if splitted.clone().nth(end_index).unwrap() == TOKENS_TO_BE_NESTED[variation_index].1 {
                             depth += 1;
-                        } else if splitted.clone().nth(whend_index).unwrap() == TOKENS_TO_BE_UNNESTED[variation_index].1 {
-                            if depth != 0 {
-                                depth -= 1;
-                            }
+                        } else if splitted.clone().nth(end_index).unwrap() == TOKENS_TO_BE_UNNESTED[variation_index].1 {
+                            if depth != 0 {depth -= 1;}
                         }
                     }
                     if depth < 0 {
                         error("Structures syntax error", format!("Error with founding {}", TOKEN_WHILE.1).as_str());
-                    } else if depth == 0 {
-                        whend_found = true;
-                    }
-                    whend_index += 1;
+                    } else if depth == 0 {end_found = true;}
+                    end_index += 1;
                 }
-                result.push((TOKEN_WHILE.0, format!("{}", whend_index - 1)));
+                result.push((TOKEN_WHILE.0, format!("{}", end_index - 1)));
             } else if split == TOKEN_WHEND.1 {
                 result.push((TOKEN_WHEND.0, "".to_string()));
+            } else if split == TOKEN_SWAP.1 {
+                result.push((TOKEN_SWAP.0, "".to_string()));
             } else {
                 println!("\x1b[31m\x1b[1m{}: \x1b[0m\x1b[31m{}\x1b[0m", "Syntax error", format!("Parsing failed: `{}`", split).as_str());
                 std::process::exit(1);
@@ -112,6 +105,11 @@ pub fn generate_tokens(code: String) -> Vec<(i32, String)> {
         iterator += 1;
     }
     return result;
+}
+
+fn error(error: &str, text: &str) {
+    println!("\x1b[31m\x1b[1m{}: \x1b[0m\x1b[31m{}\x1b[0m", error, text);
+    std::process::exit(1);
 }
 
 pub fn read_code(name: String) -> String {

@@ -25,7 +25,8 @@ fn main() {
     if debug {println!("\x1b[34m\x1b[1mParsed code\x1b[0m: {:?}", tokens);}
 
     let mut stack: Vec<(i32, i32, String)> = vec!();
-    for i in 0..tokens.len() {
+    let mut i: usize = 0;
+    while i < tokens.len() {
         if tokens[i].0 == TOKEN_NUM.0 {
             if let Ok(int) = tokens[i].1.parse::<i32>() {
                 stack.push((1, int, "".to_string()));
@@ -78,18 +79,34 @@ fn main() {
             let b = get_element_from_stack(&mut stack, "plus").1;
             stack.push((1, i32::pow(b, 1 / a as u32), "".to_string()));
         } else if tokens[i].0 == TOKEN_IF.0 {
-            break;
+            let a = get_element_from_stack(&mut stack, "if").1;
+            stack.push((1, a, "".to_string()));
+            if  a != 0 {
+                i = tokens[i].1.parse::<usize>().unwrap();
+            }
         } else if tokens[i].0 == TOKEN_FI.0 {
-            break;
+            i += 1; continue;
         } else if tokens[i].0 == TOKEN_WHILE.0 {
-            break;
+            let a = get_element_from_stack(&mut stack, "if").1;
+            let b = get_element_from_stack(&mut stack, "if").1;
+            stack.push((1, b, "".to_string()));
+            stack.push((1, a, "".to_string()));
+            // if a != b {
+
+            // }
         } else if tokens[i].0 == TOKEN_WHEND.0 {
-            break;
+            i += 1; continue;
         } else if tokens[i].0 == TOKEN_EXIT.0 {
             std::process::exit(0);
+        } else if tokens[i].0 == TOKEN_SWAP.0 {
+            let a = get_element_from_stack(&mut stack, "swap").1;
+            let b = get_element_from_stack(&mut stack, "swap").1;
+            stack.push((1, a, "".to_string()));
+            stack.push((1, b, "".to_string()));
         } else {
             error("Interpretation error", format!("Unexpected syntax, has been parsed, but can't be interpreted: {}", tokens[i].0).as_str());
         }
+        i += 1;
     }
 }
 

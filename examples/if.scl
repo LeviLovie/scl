@@ -1,0 +1,7 @@
+// If last element on the stack is zero, if will be entered
+10 10 -
+if 1 . fi
+
+// If last element is anything but zero, else will be skipped
+10 9 -
+if 0 . fi
