@@ -21,7 +21,7 @@ fn main() {
         }
     }
 
-    let tokens = generate_tokens(read_code(file_name));
+    let mut tokens = generate_tokens(read_code(file_name));
     if debug {println!("\x1b[34m\x1b[1mParsed code\x1b[0m: {:?}", tokens);}
 
     let mut stack: Vec<(i32, i32, String)> = vec!();
@@ -86,16 +86,6 @@ fn main() {
             }
         } else if tokens[i].0 == TOKEN_FI.0 {
             i += 1; continue;
-        } else if tokens[i].0 == TOKEN_WHILE.0 {
-            let a = get_element_from_stack(&mut stack, "if").1;
-            let b = get_element_from_stack(&mut stack, "if").1;
-            stack.push((1, b, "".to_string()));
-            stack.push((1, a, "".to_string()));
-            // if a != b {
-
-            // }
-        } else if tokens[i].0 == TOKEN_WHEND.0 {
-            i += 1; continue;
         } else if tokens[i].0 == TOKEN_EXIT.0 {
             std::process::exit(0);
         } else if tokens[i].0 == TOKEN_SWAP.0 {
@@ -103,6 +93,18 @@ fn main() {
             let b = get_element_from_stack(&mut stack, "swap").1;
             stack.push((1, a, "".to_string()));
             stack.push((1, b, "".to_string()));
+        } else if tokens[i].0 == TOKEN_REPEAT.0 {
+            let a = get_element_from_stack(&mut stack, "repeat").1;
+            tokens[i].1 = a.to_string();
+        } else if tokens[i].0 == TOKEN_REPEAT_END.0 {
+            let repeat_start = tokens[i].1.parse::<usize>().unwrap();
+            let max_iters = tokens[repeat_start].1.parse::<i32>().unwrap();
+            tokens[repeat_start].2 += 1;
+            if max_iters > tokens[repeat_start].2 {
+                i = repeat_start;
+            } else {
+                i += 1; continue;
+            }
         } else {
             error("Interpretation error", format!("Unexpected syntax, has been parsed, but can't be interpreted: {}", tokens[i].0).as_str());
         }
