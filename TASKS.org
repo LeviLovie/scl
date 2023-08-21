@@ -14,3 +14,11 @@
   - Plus, minus
   - Print (!), dump (.)
   - Clear (§)
+* Math
+- [X] Multiply (*)
+- [X] Divide (/)
+- [X] Bit Moves (<<, >>)
+- [X] Power (**)
+- [X] Root (^)
+- [X] Round (rond)
+- [X] Floor round (flr)
