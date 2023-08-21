@@ -6,7 +6,7 @@ SFC is a stack-based programming language
 * Plans
 - [X] Stack
 - [X] Math
-- [ ] Floats and Strings
+- [X] Floats and Strings
 - [ ] Structures
 - [ ] Static memory
 - [ ] Functions and macros
