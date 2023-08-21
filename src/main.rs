@@ -77,6 +77,16 @@ fn main() {
             let a = get_element_from_stack(&mut stack, "plus").1;
             let b = get_element_from_stack(&mut stack, "plus").1;
             stack.push((1, i32::pow(b, 1 / a as u32), "".to_string()));
+        } else if tokens[i].0 == TOKEN_IF.0 {
+            break;
+        } else if tokens[i].0 == TOKEN_FI.0 {
+            break;
+        } else if tokens[i].0 == TOKEN_WHILE.0 {
+            break;
+        } else if tokens[i].0 == TOKEN_WHEND.0 {
+            break;
+        } else if tokens[i].0 == TOKEN_EXIT.0 {
+            std::process::exit(0);
         } else {
             error("Interpretation error", format!("Unexpected syntax, has been parsed, but can't be interpreted: {}", tokens[i].0).as_str());
         }
