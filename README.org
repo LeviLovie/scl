@@ -9,5 +9,5 @@ SFC is a stack-based programming language
 - [X] Floats and Strings
 - [X] Structures
 - [ ] Static memory
-- [ ] Functions and macros
+- [ ] Macros
 - [ ] Turing completness
